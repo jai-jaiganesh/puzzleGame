@@ -1,24 +1,27 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-import React from 'react';
+import React, {useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import WordPuzzleGame from './src/screen/word-puzzle-game.screen';
 import PuzzleDashboard from './src/screen/puzzle-dashboard.screen';
 import SuccessScreen from './src/screen/success-screen';
 import LeadersBoardScreen from './src/screen/leader-board.screen';
+
 const Stack = createStackNavigator();
 
 const App = () => {
+  const [leadersBoardData, setLeadersBoardData] = useState([
+    {id: 0, name: 'Animals', points: 0},
+    {id: 1, name: 'Countries', points: 0},
+    {id: 2, name: 'Fruits', points: 0},
+  ]);
   const route = [
     {
       name: 'PuzzleDashboard',
       component: PuzzleDashboard,
+      props: {
+        leadersBoardDataValue: leadersBoardData,
+        setLeadersBoardDataValue: setLeadersBoardData,
+      },
     },
     {
       name: 'WordPuzzleGame',
@@ -31,6 +34,7 @@ const App = () => {
     {
       name: 'LeadersBoardScreen',
       component: LeadersBoardScreen,
+      props: {leadersBoardDataValue: leadersBoardData},
     },
   ];
 
@@ -44,6 +48,7 @@ const App = () => {
               name={route.name}
               options={{headerShown: false}}
               component={route.component}
+              initialParams={route.props}
             />
           );
         })}

@@ -3,9 +3,13 @@ import {View, Text, FlatList, TouchableOpacity} from 'react-native';
 import {Styles} from '../styles/puzzle-dashboard.style';
 import {buttonList} from '../utils/puzzleGame.utils';
 
-const PuzzleDashboard = ({navigation}) => {
+const PuzzleDashboard = ({navigation, route}) => {
   const onClick = (item: []) => {
-    navigation.navigate('WordPuzzleGame', {item});
+    navigation.navigate('WordPuzzleGame', {
+      item,
+      leadersBoardData: route.params.leadersBoardDataValue,
+      setLeadersBoardData: route.params.setLeadersBoardDataValue,
+    });
   };
 
   const renderItem = ({item}) => {

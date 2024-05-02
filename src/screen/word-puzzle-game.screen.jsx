@@ -9,7 +9,12 @@ import {
 } from 'react-native';
 import {Styles} from '../styles/word-puzzle-game.style';
 
-const WordPuzzleGame = ({navigation, route}) => {
+const WordPuzzleGame = ({
+  navigation,
+  route,
+  leadersBoardDataValue,
+  setLeadersBoardDataValue,
+}) => {
   const words = route.params.item.words;
   const [selectedWord, setSelectedWord] = useState('');
   const [puzzle, setPuzzle] = useState([]);
@@ -29,8 +34,6 @@ const WordPuzzleGame = ({navigation, route}) => {
     randomIndex = Math.floor(Math.random() * words.length);
     const word = words[randomIndex].name;
     setSelectedDescription(words[randomIndex].description);
-    console.log('dataArray', route.params.item.words.name);
-
     setSelectedWord(word);
     const shuffledWord = shuffleWord(word);
     setPuzzle(word.split(''));
@@ -53,18 +56,27 @@ const WordPuzzleGame = ({navigation, route}) => {
     const inputPuzzle = newInputValues.join('');
     if (inputPuzzle === selectedWord) {
       setChangeButton(true);
+      handleCorrectAnswer();
     }
     if (text === selectedWord[index]) {
       const newShuffledPuzzle = [...shuffledPuzzle];
       matchedIndex = newShuffledPuzzle.findIndex(char => char === text);
       if (matchedIndex !== -1) {
-        console.log('inputValues', inputValues.length);
-
-        console.log('matchedIndex1==>', matchedIndex);
-
         newShuffledPuzzle[matchedIndex] = ' ';
         setShuffledPuzzle(newShuffledPuzzle);
       }
+    }
+  };
+
+  const handleCorrectAnswer = () => {
+    if (leadersBoardDataValue) {
+      const updatedData = leadersBoardDataValue.map(item => {
+        if (item.name === route.params.item.name) {
+          return {...item, points: item.points + 10};
+        }
+        return item;
+      });
+      setLeadersBoardDataValue(updatedData);
     }
   };
 

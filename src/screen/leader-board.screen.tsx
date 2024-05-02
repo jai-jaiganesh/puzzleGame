@@ -1,12 +1,9 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import {leadersBoardData} from '../utils/puzzleGame.utils';
 import {Styles} from '../styles/word-puzzle-game.style';
 import {CommonActions} from '@react-navigation/native';
 
-const LeadersBoardScreen = ({navigation}) => {
-  const sortedData = [...leadersBoardData].sort((a, b) => b.points - a.points);
-
+const LeadersBoardScreen = ({navigation, route}) => {
   const navigateToDashboard = () => {
     navigation.dispatch(
       CommonActions.reset({
@@ -17,11 +14,13 @@ const LeadersBoardScreen = ({navigation}) => {
       }),
     );
   };
+
+  const leadersBoardData = route.params.leadersBoardDataValue;
   return (
     <View style={Styles.parentContainer}>
       <View style={styles.container}>
         <Text style={styles.header}>Leaderboard</Text>
-        {sortedData.map((item, index) => (
+        {leadersBoardData.map((item, index) => (
           <View key={index} style={styles.item}>
             <Text style={styles.name}>{item.name}</Text>
             <Text style={styles.points}>{item.points}</Text>

@@ -30,13 +30,3 @@ export const buttonList = [
     ],
   },
 ];
-
-export const leadersBoardData = [
-  {id: 0, name: 'jai', points: 100},
-  {id: 1, name: 'Ganesh', points: 10},
-  {id: 2, name: 'john', points: 20},
-  {id: 3, name: 'Alexa', points: 30},
-  {id: 4, name: 'raghul', points: 40},
-  {id: 5, name: 'mike', points: 50},
-  {id: 6, name: 'george', points: 60},
-];
