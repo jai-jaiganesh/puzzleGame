@@ -9,12 +9,8 @@ import {
 } from 'react-native';
 import {Styles} from '../styles/word-puzzle-game.style';
 
-const WordPuzzleGame = ({
-  navigation,
-  route,
-  leadersBoardDataValue,
-  setLeadersBoardDataValue,
-}) => {
+const WordPuzzleGame = ({navigation, route}) => {
+  const {leadersBoardDataValue, setLeadersBoardDataValue} = route.params;
   const words = route.params.item.words;
   const [selectedWord, setSelectedWord] = useState('');
   const [puzzle, setPuzzle] = useState([]);
@@ -41,7 +37,7 @@ const WordPuzzleGame = ({
     setShuffledPuzzle(shuffledWord);
   };
 
-  const shuffleWord = word => {
+  const shuffleWord = (word: string) => {
     return word.split('').sort(() => Math.random() - 0.5);
   };
 
@@ -49,14 +45,14 @@ const WordPuzzleGame = ({
     navigation.navigate('SuccessScreen');
   };
 
-  const handleInputChange = (text, index) => {
+  const handleInputChange = (text: string, index: number) => {
     const newInputValues = [...inputValues];
     newInputValues[index] = text;
     setInputValues(newInputValues);
     const inputPuzzle = newInputValues.join('');
     if (inputPuzzle === selectedWord) {
-      setChangeButton(true);
       handleCorrectAnswer();
+      setChangeButton(true);
     }
     if (text === selectedWord[index]) {
       const newShuffledPuzzle = [...shuffledPuzzle];
@@ -70,12 +66,14 @@ const WordPuzzleGame = ({
 
   const handleCorrectAnswer = () => {
     if (leadersBoardDataValue) {
-      const updatedData = leadersBoardDataValue.map(item => {
-        if (item.name === route.params.item.name) {
-          return {...item, points: item.points + 10};
-        }
-        return item;
-      });
+      const updatedData = leadersBoardDataValue.map(
+        (item: {name: any; points: number}) => {
+          if (item.name === route.params.item.name) {
+            return {...item, points: item.points + 10};
+          }
+          return item;
+        },
+      );
       setLeadersBoardDataValue(updatedData);
     }
   };

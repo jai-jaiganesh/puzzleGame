@@ -18,14 +18,14 @@ const App = () => {
     {
       name: 'PuzzleDashboard',
       component: PuzzleDashboard,
-      props: {
-        leadersBoardDataValue: leadersBoardData,
-        setLeadersBoardDataValue: setLeadersBoardData,
-      },
     },
     {
       name: 'WordPuzzleGame',
       component: WordPuzzleGame,
+      initialParams: {
+        leadersBoardDataValue: leadersBoardData,
+        setLeadersBoardDataValue: setLeadersBoardData,
+      },
     },
     {
       name: 'SuccessScreen',
@@ -34,7 +34,7 @@ const App = () => {
     {
       name: 'LeadersBoardScreen',
       component: LeadersBoardScreen,
-      props: {leadersBoardDataValue: leadersBoardData},
+      initialParams: {leadersBoardDataValue: leadersBoardData},
     },
   ];
 
@@ -48,7 +48,7 @@ const App = () => {
               name={route.name}
               options={{headerShown: false}}
               component={route.component}
-              initialParams={route.props}
+              initialParams={route.initialParams}
             />
           );
         })}
